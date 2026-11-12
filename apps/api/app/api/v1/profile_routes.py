@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from sqlalchemy import select
 
@@ -32,7 +34,7 @@ def save_profile(payload: ProfileInput):
 
 
 @router.post("/resume/extract", response_model=ResumeExtraction)
-async def extract_resume(file: UploadFile = File(...)):
+async def extract_resume(file: Annotated[UploadFile, File()]):
     if file.content_type not in ("application/pdf", "application/octet-stream"):
         raise HTTPException(status_code=415, detail="Envie um arquivo PDF.")
     try:

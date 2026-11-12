@@ -1,6 +1,11 @@
-from datetime import timezone
+from datetime import UTC
 
-from app.modules.jobs.providers import normalize_arbeitnow, normalize_remotive, parse_date, plain_text
+from app.modules.jobs.providers import (
+    normalize_arbeitnow,
+    normalize_remotive,
+    parse_date,
+    plain_text,
+)
 
 
 def test_remotive_normalization():
@@ -43,4 +48,4 @@ def test_invalid_records_are_skipped():
 def test_html_and_date_handling():
     assert plain_text("<b>SQL</b> &amp; Python") == "SQL & Python"
     assert parse_date("invalid") is None
-    assert parse_date("2026-11-01T10:00:00Z").tzinfo == timezone.utc
+    assert parse_date("2026-11-01T10:00:00Z").tzinfo == UTC

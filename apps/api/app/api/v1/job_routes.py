@@ -1,8 +1,8 @@
+import httpx
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import literal_column, or_, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import SQLAlchemyError
-import httpx
 
 from app.db.session import SessionLocal
 from app.modules.jobs.models import Job
@@ -41,7 +41,7 @@ def list_jobs(
 async def import_jobs(payload: ImportRequest):
     try:
         jobs = await fetch_jobs(payload.source, payload.query.strip())
-    except (httpx.HTTPError, ValueError) as exc:
+    except (httpx.HTTPError, ValueError, TypeError) as exc:
         raise HTTPException(status_code=502, detail="Fonte de vagas temporariamente indisponível.") from exc
 
     inserted = 0
