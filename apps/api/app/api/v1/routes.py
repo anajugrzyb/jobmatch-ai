@@ -1,7 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
-from fastapi import HTTPException
+
 from app.db.session import engine
 
 router = APIRouter(prefix="/api/v1")

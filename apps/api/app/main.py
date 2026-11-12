@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1.job_routes import router as job_router
 from app.api.v1.profile_routes import router as profile_router
 from app.api.v1.routes import router
 from app.core.config import settings
 
-app = FastAPI(title="JobMatch AI API", version="0.2.0")
+app = FastAPI(title="JobMatch AI API", version="0.3.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()],
@@ -15,3 +16,4 @@ app.add_middleware(
 )
 app.include_router(router)
 app.include_router(profile_router)
+app.include_router(job_router)
